@@ -1,10 +1,10 @@
 # Serverless Quiz Api
 
-a Quiz application using Nodejs, AWS Lambda and Serverless framework.
+Api to perform basic crud operations on quiz items using  Nodejs, AWS Lambda and Serverless framework.
 
 # Functionality of the application
 
-This application allows creating/removing/updating/fetching Quiz items. Each Quiz item can optionally have an attachment image. Each user only has access to edit QUIZ items that he/she has created.
+This application allows creating/removing/updating/fetching QUIZ items. Each Quiz item can optionally have an attachment image. Each user only has access to edit QUIZ items that he/she has created.
 
 # QUIZ items
 
