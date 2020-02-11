@@ -1,0 +1,257 @@
+{
+	"info": {
+		"_postman_id": "7c1101fe-3264-4916-8cd5-8a5abda80440",
+		"name": "Quiz Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Quizzes",
+			"item": [
+				{
+					"name": "Get all quizzes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/quizzes",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"quizzes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create quiz",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"category\": \"art\",\n\t\"type\": \"multiple\",\n\t\"difficulty\": \"easy\",\n\t\"quiz\": \"Who painted the Mona Lisa?\",\n\t\"correct_answer\": \"Leonardo da Vinci\",\n\t\"incorrect_answers\": [\"Pablo Picasso\",\"Claude Monet\",\"Vincent van Gogh\"]\n}"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/quizzes",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"quizzes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update quiz",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"category\": \"art\",\n\t\"type\": \"multiple\",\n\t\"difficulty\": \"easy\",\n\t\"quiz\": \"Who painted the Mona Lisa?\",\n\t\"correct_answer\": \"Leonardo da Vinci\",\n\t\"incorrect_answers\": [\"Pablo Picasso\",\"Claude Monet\",\"Vincent van Gogh\"]\n}"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/quizzes/35dd600f-43c2-4649-903c-615e1586a26f",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"quizzes",
+								"35dd600f-43c2-4649-903c-615e1586a26f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete quiz",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/quizzes/fe671583-4512-45f6-9475-4265c04362fb",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"quizzes",
+								"fe671583-4512-45f6-9475-4265c04362fb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get attachment URL",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/quizzes/3836b777-9bc4-4429-9b79-ba4e4f5f91c0/attachment",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"quizzes",
+								"3836b777-9bc4-4429-9b79-ba4e4f5f91c0",
+								"attachment"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ce2b42d4-8cc5-4f30-a6ed-e7f0f303c3fd",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "efb16c49-3866-4241-97d1-360ad72736d8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2e83c0fe-6650-44d5-a90f-4c27ff720d83",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "977c227e-2df3-42eb-9a48-ec25e2f7eeae",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "79306d6c-5893-4a35-9a54-ab7422b9f28a",
+			"key": "apiId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "cc9593f5-a344-4055-a347-1ea800f265b7",
+			"key": "authToken",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
