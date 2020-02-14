@@ -32,6 +32,9 @@ custom:
   
 functions:
 
+  Auth:
+    handler: src/lambda/auth/auth0Authorizer.handler
+
   GetQuizzes:
     handler: src/lambda/http/getQuizzes.handler
     events:
@@ -39,6 +42,7 @@ functions:
          method: get
          path: quizzes
          cors: true
+         authorizer: Auth
     iamRoleStatements:
       - Effect: Allow
         Action:
