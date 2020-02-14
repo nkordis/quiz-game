@@ -135,7 +135,7 @@ All necessary resources like DynamoDB table and S3 bucket have been added to the
 
 ## Authentication
 
-Authentication has been implemented with Ath0 using asymmetrically encrypted JWT tokens.
+Authentication has been implemented with Auth0 using asymmetrically encrypted JWT tokens.
 
 # How to run the application
 
@@ -153,3 +153,6 @@ sls deploy -v
 
 To test the API, you can use the Postman collection that contains sample requests. You can find a Postman collection in this project.
 
+# Resources
+
+* Navigating RS256 and JWKS - https://auth0.com/blog/navigating-rs256-and-jwks/
