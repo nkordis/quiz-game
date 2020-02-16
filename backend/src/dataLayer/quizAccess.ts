@@ -44,4 +44,19 @@ export class QuizAccess {
         return items as QuizItem[]
     }
 
+    /**
+     * Creates new quiz items 
+     * @param {QuizItem} quiz the quiz to create
+     * @returns {QuizItem} the quiz created
+     */
+    async createQuiz(quiz: QuizItem): Promise<QuizItem> {
+        logger.info('Creating a new quiz item')
+        await this.docClient.put({
+            TableName: this.quizzesTable,
+            Item: quiz
+        }).promise()
+
+        return quiz
+    }
+
 }

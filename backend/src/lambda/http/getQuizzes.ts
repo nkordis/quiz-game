@@ -8,8 +8,8 @@ const logger = createLogger('getQuizzes')
 
 /**
  * Handles GET /quizzes endpoint
- * @param {APIGatewayProxyEvent} event request on api's endpoint
- * @returns {APIGatewayProxyResult} response
+ * @param {APIGatewayProxyEvent} event request to get the quizzes created by the user
+ * @returns {APIGatewayProxyResult} the quizzes created by the user
  */
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     logger.info('Processing event: ', event)
