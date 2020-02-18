@@ -1,7 +1,7 @@
 import * as AWS from 'aws-sdk'
 //import * as AWSXRay from 'aws-xray-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
-
+import { UpdateQuizRequest } from '../requests/UpdateQuizRequest'
 import { QuizItem } from '../models/QuizItem'
 import { createLogger } from '../utils/logger'
 
@@ -104,4 +104,61 @@ export class QuizAccess {
 
     }
 
+    /**
+     * Deletes quiz items by quiz id
+     * @param {string} userId user's id
+     * @param {string} quizId quiz's id
+     * @param {UpdateQuizRequest} quizToUpdate quiz's values to update
+     * @returns {QuizItem} the old quiz
+     */
+    async updateQuiz(userId: string, quizId: string, quizToUpdate: UpdateQuizRequest): Promise<QuizItem> {
+        logger.info('Deleting a quiz item by quiz id')
+        //Find all quizzes of the current user
+        const result = await this.docClient.query({
+            TableName: this.quizzesTable,
+            IndexName: this.userIdIndex,
+            KeyConditionExpression: 'userId = :userId',
+            ExpressionAttributeValues: {
+                ':userId': userId
+            }
+        }).promise()
+
+        const items = result.Items as QuizItem[]
+
+        //Find the quiz to update
+        let item: QuizItem = undefined
+        items.forEach(element => {
+            if (element["quizId"] === quizId) {
+                item = element
+            }
+        });
+
+        //The composite key of the quiz with the quiz's fields to update
+        const params = {
+            TableName: this.quizzesTable,
+            Key: {
+                "quizId": quizId,
+                "createdAt": item["createdAt"]
+            },
+            UpdateExpression: "set category = :c, #quiz_type = :t, difficulty = :d, quiz = :q, correct_answer = :ca, incorrect_answers = :ia",
+            ExpressionAttributeValues: {
+                ":c": quizToUpdate.category,
+                ":t": quizToUpdate.type,
+                ":d": quizToUpdate.difficulty,
+                ":q": quizToUpdate.quiz,
+                ":ca": quizToUpdate.correct_answer,
+                ":ia": quizToUpdate.incorrect_answers
+            },
+            ExpressionAttributeNames:{
+                "#quiz_type": "type"
+            }
+
+        }
+
+        // Update the quiz item
+        await this.docClient.update(params).promise()
+
+
+        return item
+    }
 }

@@ -3,8 +3,10 @@ import { createLogger } from '../utils/logger'
 import { QuizItem } from '../models/QuizItem'
 import { QuizAccess } from '../dataLayer/quizAccess'
 import { CreateQuizRequest } from '../requests/CreateQuizRequest'
+import { UpdateQuizRequest } from '../requests/UpdateQuizRequest'
 import { parseUserId } from '../auth/utils'
 import { QuizStorage } from '../lambda/s3/QuizStorage'
+
 
 const logger = createLogger('quizzesBusinessLogic')
 const quizAccess = new QuizAccess()
@@ -78,5 +80,21 @@ export async function deleteQuiz(jwtToken: string, quizId: string): Promise<Quiz
     const userId = parseUserId(jwtToken)
     return quizAccess.deleteQuiz(userId, quizId)
 
+
+}
+
+/**
+ * Updates a quiz item by quiz id
+ * @param {string} jwtToken user's jwt token
+ * @param {string} quizId quiz id
+ * @param {UpdateQuizRequest} quizToUpdate quiz's values to update
+ * @returns {QuizItem} the old item
+ */
+export async function updateQuiz(jwtToken: string, quizId: string, quizToUpdate: UpdateQuizRequest): Promise<QuizItem> {
+    logger.info('Request to delete a quiz item by quiz id')
+
+    const userId = parseUserId(jwtToken)
+
+    return quizAccess.updateQuiz(userId, quizId, quizToUpdate);
 
 }

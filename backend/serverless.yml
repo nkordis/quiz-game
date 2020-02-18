@@ -112,6 +112,33 @@ functions:
         Resource: 
           - "*"
 
+  UpdateQuiz:
+    handler: src/lambda/http/updateQuiz.handler
+    events:
+      - http:
+          method: patch
+          path: quizzes/{quizId}
+          cors: true
+          authorizer: Auth
+          documentation:
+            summary: Update a quiz
+            description: Update a quiz
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource:  arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.QUIZ_TABLE}/index/${self:provider.environment.INDEX_NAME}
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.QUIZ_TABLE}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: 
+          - "*"
+
 resources:
   Resources:
     GatewayResponseDefault4XX:
