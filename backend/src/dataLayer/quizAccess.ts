@@ -23,14 +23,15 @@ export class QuizAccess {
         private readonly quizzesTable = process.env.QUIZ_TABLE,
         private readonly userIdIndex = process.env.INDEX_NAME) {
     }
-     /**
-     * Gets quiz items by user id from DynamoDB
-     * @param {string} userId user's id
-     * @returns {QuizItem[]} an array of quizzes
-     */
+    /**
+    * Gets quiz items by user id from DynamoDB
+    * @param {string} userId user's id
+    * @returns {QuizItem[]} an array of quizzes
+    */
     async getQuizzes(userId: string): Promise<QuizItem[]> {
         logger.info('Getting quiz items by user id')
 
+        //Find all quizzes of the current user
         const result = await this.docClient.query({
             TableName: this.quizzesTable,
             IndexName: this.userIdIndex,
@@ -57,6 +58,50 @@ export class QuizAccess {
         }).promise()
 
         return quiz
+    }
+
+    /**
+     * Deletes quiz items by quiz id
+     * @param {string} userId user's id
+     * @param {string} quizId quiz's id
+     * @returns {QuizItem} the deleted quiz
+     */
+
+    async deleteQuiz(userId: string, quizId: string): Promise<QuizItem> {
+        logger.info('Deleting a quiz item by quiz id')
+        //Find all quizzes of the current user
+        const result = await this.docClient.query({
+            TableName: this.quizzesTable,
+            IndexName: this.userIdIndex,
+            KeyConditionExpression: 'userId = :userId',
+            ExpressionAttributeValues: {
+                ':userId': userId
+            }
+        }).promise()
+
+        const items = result.Items as QuizItem[]
+
+        //Find the quiz to delete
+        let item: QuizItem = undefined
+        items.forEach(element => {
+            if (element["quizId"] === quizId) {
+                item = element
+            }
+        });
+
+        //The composite key of the quiz item to delete
+        const params = {
+            TableName: this.quizzesTable,
+            Key: {
+                "quizId": quizId,
+                "createdAt": item["createdAt"]
+            }
+        }
+        // Delete the quiz item
+        await this.docClient.delete(params).promise()
+
+        return item as QuizItem
+
     }
 
 }

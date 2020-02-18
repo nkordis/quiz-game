@@ -45,6 +45,9 @@ functions:
          path: quizzes
          cors: true
          authorizer: Auth
+         documentation:
+           summary: Get user's quizzes
+           description: Get user's quizzes
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -74,6 +77,33 @@ functions:
     iamRoleStatements:
       - Effect: Allow
         Action: dynamodb:PutItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.QUIZ_TABLE}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: 
+          - "*"
+
+  DeleteQuiz:
+    handler: src/lambda/http/deleteQuiz.handler
+    events:
+      - http:
+          method: delete
+          path: quizzes/{quizId}
+          cors: true
+          authorizer: Auth
+          documentation:
+            summary: Delete a quiz
+            description: Delete a quiz
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource:  arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.QUIZ_TABLE}/index/${self:provider.environment.INDEX_NAME}
+      - Effect: Allow
+        Action:
+          - dynamodb:DeleteItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.QUIZ_TABLE}
       - Effect: Allow
         Action:

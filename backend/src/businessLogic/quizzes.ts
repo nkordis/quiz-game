@@ -60,4 +60,23 @@ export async function createQuiz(
     }
 
     return item
+
+
+
+
+}
+
+/**
+ * Deletes a quiz item by quiz id
+ * @param {string} jwtToken user's jwt token
+ * @param {string} quizId quiz id to delete
+ * @returns {QuizItem} the deleted item
+ */
+export async function deleteQuiz(jwtToken: string, quizId: string): Promise<QuizItem> {
+    logger.info('Request to delete a quiz item by quiz id')
+
+    const userId = parseUserId(jwtToken)
+    return quizAccess.deleteQuiz(userId, quizId)
+
+
 }
