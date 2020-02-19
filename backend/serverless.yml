@@ -4,6 +4,7 @@ service:
 plugins:
   - serverless-webpack
   - serverless-iam-roles-per-function
+  - serverless-reqvalidator-plugin
   - serverless-aws-documentation
   
 provider:
@@ -31,7 +32,11 @@ custom:
         version: v1.0.0
         title: Quiz api
         description: serverless application for QUIZ items
-  
+    models:
+      - name: CreateQuizRequest
+        contentType: application/json
+        schema: ${file(schemas/create-quiz-request.json)}
+
 functions:
 
   Auth:
@@ -68,12 +73,12 @@ functions:
           path: quizzes
           cors: true
           authorizer: Auth
-         # reqValidatorName: RequestBodyValidator
+          reqValidatorName: RequestBodyValidator
           documentation:
             summary: Create a new Quiz
             description: Create a new Quiz
-          #  requestModels:
-          #    'application/json': CreateQuizRequest
+            requestModels:
+              'application/json': CreateQuizRequest
     iamRoleStatements:
       - Effect: Allow
         Action: dynamodb:PutItem
@@ -171,6 +176,15 @@ resources:
         ResponseType: DEFAULT_4XX
         RestApiId:
           Ref: ApiGatewayRestApi
+
+    RequestBodyValidator:
+      Type: AWS::ApiGateway::RequestValidator
+      Properties:
+        Name: 'request-body-validator'
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        ValidateRequestBody: true
+        ValidateRequestParameters: false
 
     QuizDynamoDBTable:
       Type: AWS::DynamoDB::Table
