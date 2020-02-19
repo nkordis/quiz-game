@@ -98,3 +98,9 @@ export async function updateQuiz(jwtToken: string, quizId: string, quizToUpdate:
     return quizAccess.updateQuiz(userId, quizId, quizToUpdate);
 
 }
+
+export function generateUploadUrl(quizId: string) {
+    logger.info('Request a url to upload an image')
+    
+    return quizStorage.getUploadUrl(quizId)
+}
