@@ -36,6 +36,9 @@ custom:
       - name: CreateQuizRequest
         contentType: application/json
         schema: ${file(schemas/create-quiz-request.json)}
+      - name: UpdateQuizRequest
+        contentType: application/json
+        schema: ${file(schemas/update-quiz-request.json)}    
 
 functions:
 
@@ -125,9 +128,12 @@ functions:
           path: quizzes/{quizId}
           cors: true
           authorizer: Auth
+          reqValidatorName: RequestBodyValidator
           documentation:
             summary: Update a quiz
             description: Update a quiz
+            requestModels:
+              'application/json': UpdateQuizRequest    
     iamRoleStatements:
       - Effect: Allow
         Action:

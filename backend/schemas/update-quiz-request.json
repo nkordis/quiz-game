@@ -1,0 +1,41 @@
+
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "quiz",
+    "type": "object",
+    "properties": {
+      "category": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "difficulty": {
+        "type": "string"
+      },
+      "quiz": {
+        "type": "string"
+      },
+      "correct_answer": {
+        "type": "string"
+      },
+      "incorrect_answers": {
+        "type": "array",
+        "uniqueItems": true,
+        "maxItems": 3,
+        "minItems": 3,
+        "items": {
+            "type": "string"
+           }
+      }
+    },
+    "required": [
+      "category",
+      "type",
+      "difficulty",
+      "quiz",
+      "correct_answer",
+      "incorrect_answers"
+    ],
+    "additionalProperties": false
+  }
