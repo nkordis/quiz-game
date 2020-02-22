@@ -185,11 +185,10 @@ cd client
 npm install
 npm run start
 ```
-
-*** Update quiz item not supported yet
+*** Patch item not supported yet
 *** Quiz's incorrect answers not supported yet
 
-# How to run a new standalone the application
+# How to run a new standalone application
 
 ## Backend
 
