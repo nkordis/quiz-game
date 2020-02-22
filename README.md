@@ -42,7 +42,7 @@ It returns data like this:
 	    "quiz": "Who painted the Mona Lisa?",
 	    "correct_answer": "Leonardo da Vinci",
 	    "incorrect_answers": ["Pablo Picasso","Claude Monet","Vincent van Gogh"]
-      "attachmentUrl": "http://example.com/image.png"
+      "attachmentUrl" : "http://example.com/image.png"
     },
     {
       "quizId": "35dd600f-43c2-4649-903c-615e1586a26f",
@@ -131,27 +131,93 @@ All functions are connected to appropriate events from API Gateway.
 
 An id of a user can be extracted from a JWT token passed by a client.
 
-All necessary resources like DynamoDB table and S3 bucket have been added to the `resources` section of the `serverless.yml`.
+All necessary resources like DynamoDB table, API Gateway and S3 bucket have been added to the `resources` section of the `serverless.yml`.
 
 ## Authentication
 
 Authentication has been implemented with Auth0 using asymmetrically encrypted JWT tokens.
 
-# How to run the application
+# To use the api
+
+## Endpoints
+
+* Auth0 domain: dev-u23y6q-y.eu.auth0.com
+
+* GET/ https://w0r626jnbc.execute-api.us-east-1.amazonaws.com/dev/quizzes
+* POST/ https://w0r626jnbc.execute-api.us-east-1.amazonaws.com/dev/quizzes
+* DELETE/ https://w0r626jnbc.execute-api.us-east-1.amazonaws.com/dev/quizzes/{quizId}
+* PATCH/ https://w0r626jnbc.execute-api.us-east-1.amazonaws.com/dev/quizzes/{quizId}
+* POST/ https://w0r626jnbc.execute-api.us-east-1.amazonaws.com/dev/quizzes/{quizId}/attachment
+
+## Postman
+
+You can find a Postman collection that contains sample requests to api's endpoints and also requests for passwordless authentication in this project. To import this collection, do the following.
+
+Click on the import button:
+
+![Alt text](images/import-collection-1.png?raw=true "Image 1")
+
+
+Click on the "Choose Files":
+
+![Alt text](images/import-collection-2.png?raw=true "Image 2")
+
+
+Select a file to import:
+
+![Alt text](images/import-collection-3.png?raw=true "Image 3")
+
+
+Right click on the imported collection to set variables for the collection:
+
+![Alt text](images/import-collection-4.png?raw=true "Image 4")
+
+Provide variables for the collection:
+
+![Alt text](images/import-collection-5.png?raw=true "Image 5")
+
+## React client
+
+To use the react client[under construction] provided in the project run the following commands:
+
+```
+cd client
+npm install
+npm run start
+```
+*** Patch item not supported yet
+*** Quiz's incorrect answers not supported yet
+
+# How to run a new standalone application
 
 ## Backend
 
-To deploy an application run the following commands:
+To deploy a new application run the following commands:
 
 ```
 cd backend
 npm install
 sls deploy -v
 ```
+## Frontend
 
-# Postman collection
+To run a client application first edit the client/src/config.ts file to set correct parameters. And then run the following commands:
+
+```
+cd client
+npm install
+npm run start
+```
+
+## Postman collection
 
 To test the API, you can use the Postman collection that contains sample requests. You can find a Postman collection in this project.
+
+## Logging
+
+* The application comes with a configured [Winston](https://github.com/winstonjs/winston) logger that creates [JSON formatted](https://stackify.com/what-is-structured-logging-and-why-developers-need-it/) log statements.
+
+* Distributed tracing is enabled using AWS X-Ray.
 
 # Resources
 
