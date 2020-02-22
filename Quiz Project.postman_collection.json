@@ -56,7 +56,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"category\": \"art\",\n\t\"type\": \"multiple\",\n\t\"difficulty\": \"easy\",\n\t\"quiz\": \"Who painted the Mona Lisa?\",\n\t\"correct_answer\": \"Leonardo da Vinci\",\n\t\"incorrect_answers\": [\"Pablo Picasso\",\"Claude Monet\",\"Vincent van Gogh\"]\n}"
+							"raw": "{\n\t\"category\": \"art\",\n\t\"type\": \"multiple\",\n\t\"quiz\": \"Who painted the Mona Lisa?\",\n\t\"difficulty\": \"easy\",\n\t\"correct_answer\": \"Leonardo da Vinci\",\n\t\"incorrect_answers\": [\"Pablo Picasso\",\"Claude Monet\", \"Vincent van Gogh\"]\n}"
 						},
 						"url": {
 							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/quizzes",
@@ -79,7 +79,7 @@
 				{
 					"name": "Update quiz",
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -98,7 +98,7 @@
 							"raw": "{\n\t\"category\": \"art\",\n\t\"type\": \"multiple\",\n\t\"difficulty\": \"easy\",\n\t\"quiz\": \"Who painted the Mona Lisa?\",\n\t\"correct_answer\": \"Leonardo da Vinci\",\n\t\"incorrect_answers\": [\"Pablo Picasso\",\"Claude Monet\",\"Vincent van Gogh\"]\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/quizzes/35dd600f-43c2-4649-903c-615e1586a26f",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/quizzes/138acb75-2261-4826-9453-a45fc8f50dc2",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -110,7 +110,7 @@
 							"path": [
 								"dev",
 								"quizzes",
-								"35dd600f-43c2-4649-903c-615e1586a26f"
+								"138acb75-2261-4826-9453-a45fc8f50dc2"
 							]
 						}
 					},
@@ -138,7 +138,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/quizzes/fe671583-4512-45f6-9475-4265c04362fb",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/quizzes/2b594087-dd97-4e32-b291-8cfc504c0f7e",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -150,7 +150,7 @@
 							"path": [
 								"dev",
 								"quizzes",
-								"fe671583-4512-45f6-9475-4265c04362fb"
+								"2b594087-dd97-4e32-b291-8cfc504c0f7e"
 							]
 						}
 					},
@@ -168,11 +168,13 @@
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": ""
+							"mode": "file",
+							"file": {
+								"src": ""
+							}
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/quizzes/3836b777-9bc4-4429-9b79-ba4e4f5f91c0/attachment",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/quizzes/138acb75-2261-4826-9453-a45fc8f50dc2/attachment",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -184,7 +186,7 @@
 							"path": [
 								"dev",
 								"quizzes",
-								"3836b777-9bc4-4429-9b79-ba4e4f5f91c0",
+								"138acb75-2261-4826-9453-a45fc8f50dc2",
 								"attachment"
 							]
 						}
@@ -215,6 +217,112 @@
 				}
 			],
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Auth0",
+			"item": [
+				{
+					"name": "Start Passwordless flow sending an email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "YePRH57PWB7Ou6VHXe60GO4WPkOZeBJU",
+									"type": "text"
+								},
+								{
+									"key": "connection",
+									"value": "email",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "nikoskordis@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "send",
+									"value": "code",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{auth0_domain}}/passwordless/start",
+							"protocol": "https",
+							"host": [
+								"{{auth0_domain}}"
+							],
+							"path": [
+								"passwordless",
+								"start"
+							]
+						},
+						"description": "Given the user email address, it will send an email with:\n\n* A link (default, send:\"link\"). You can then authenticate with this user opening the link and he will be automatically logged in to the application. Optionally, you can append/override parameters to the link (like scope, redirect_uri, protocol, response_type, etc.) using authParams object.\n* A verification code (send:\"code\"). You can then authenticate with this user using the /oauth/ro endpoint specifying email as username and code as password."
+					},
+					"response": []
+				},
+				{
+					"name": "Authorization Code Passwordless",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "http://auth0.com/oauth/grant-type/passwordless/otp",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "YePRH57PWB7Ou6VHXe60GO4WPkOZeBJU",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "FMcluNJaSi3LG5BAcTOvGAUgznlLeFOQlAU7Bm-rAznmzNyd_GoLSJOQqtd0gnfY",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "nikoskordis@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "realm",
+									"value": "email",
+									"type": "text"
+								},
+								{
+									"key": "otp",
+									"value": "980263",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{auth0_domain}}/oauth/token",
+							"protocol": "https",
+							"host": [
+								"{{auth0_domain}}"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						},
+						"description": "This is the OAuth 2.0 grant that regular web apps utilize in order to access an API. Use this endpoint to exchange an Authorization Code for an Access Token."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"event": [
@@ -241,13 +349,19 @@
 	],
 	"variable": [
 		{
-			"id": "79306d6c-5893-4a35-9a54-ab7422b9f28a",
+			"id": "0fd3c372-8fed-403d-8e85-5e8b3061eb06",
 			"key": "apiId",
+			"value": "w0r626jnbc",
+			"type": "string"
+		},
+		{
+			"id": "1cd09fd0-6cf1-408f-abba-7637bbfd5172",
+			"key": "auth0_domain",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "cc9593f5-a344-4055-a347-1ea800f265b7",
+			"id": "3dcc5272-7981-4b9f-896b-f1d0166e9bf3",
 			"key": "authToken",
 			"value": "",
 			"type": "string"
